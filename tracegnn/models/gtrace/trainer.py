@@ -1,4 +1,7 @@
 from typing import *
+
+# from torch.utils.tensorboard import SummaryWriter
+
 from .config import ExpConfig
 
 import dgl
@@ -16,6 +19,9 @@ from tracegnn.utils import *
 from .dataset import TrainDataset
 from .evaluate import evaluate
 from .models.level_model import LevelModel, level_model_loss
+
+import pandas as pd
+import matplotlib.pyplot as plt
 
 
 def train_epoch(config: ExpConfig,
@@ -110,6 +116,10 @@ def trainer(config: ExpConfig,
     model = LevelModel(config).to(config.device)
     optimizer = torch.optim.AdamW(model.parameters())
 
+    # Charting loss
+    # writer = SummaryWriter('logs')
+    losses = []
+
     # Set min loss for evalation
     min_val_loss = 1e9
 
@@ -129,6 +139,10 @@ def trainer(config: ExpConfig,
         val_total_loss, val_lat_loss, val_kl_loss = val_epoch(config, val_loader, model)
         logger.info(f'Valid Epoch: {epoch}  Loss: {val_total_loss} Latency Loss: {val_lat_loss} KL Loss: {val_kl_loss}')
 
+        # Charting loss
+        # writer.add_scalar('loss', val_total_loss, epoch)
+        losses.append(val_total_loss)
+
         if val_total_loss < min_val_loss:
             min_val_loss = val_total_loss
 
@@ -147,5 +161,9 @@ def trainer(config: ExpConfig,
     # Final evaluation
     if test_loader is not None:
         evaluate(config, test_loader, model)
+
+    # save loss
+    loss_df = pd.DataFrame(losses, columns=['loss'])
+    loss_df.to_csv('losses.csv', index=False)
 
     logger.info('Training finished.')

@@ -1,7 +1,7 @@
 from typing import *
 
 import numpy as np
-from sklearn.metrics import precision_recall_curve, average_precision_score
+from sklearn.metrics import precision_recall_curve, average_precision_score, roc_auc_score
 
 __all__ = [
     'fscore_for_precision_and_recall',
@@ -35,3 +35,4 @@ def best_fscore(proba: np.ndarray,
 
 def auc_score(proba: np.ndarray, truth: np.ndarray) -> float:
     return float(average_precision_score(truth, proba))
+    # return float(roc_auc_score(truth, proba))

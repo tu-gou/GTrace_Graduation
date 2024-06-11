@@ -25,7 +25,7 @@ from .trainer import trainer
 
 
 def init_seed(config: ExpConfig):
-    # set random seed to encourage reproducibility (does it really work?)
+    # set random seed to encourage reproducibility
     if config.seed is not None:
         torch.manual_seed(config.seed)
         torch.cuda.manual_seed_all(config.seed)
@@ -80,8 +80,8 @@ def main(exp: mltk.Experiment):
     # model = LevelModel(config).to(config.device)
     # load_model = torch.load(r'D:/GraduationProject/GTrace/tracegnn/models/gtrace/model.pth')
     # model.load_state_dict(load_model)
-    # evaluate(config, test_loader, model)
-    #
+    # print(model)
+
 
 
 if __name__ == '__main__':

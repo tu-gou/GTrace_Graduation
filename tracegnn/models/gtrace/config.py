@@ -10,7 +10,7 @@ class ExpConfig(mltk.Config):
     device: str = 'cuda'
     dataset: str = 'dataset_b'
     test_dataset: str = 'test'
-    seed: int = 1234
+    seed: int = 42
 
     batch_size: int = 128
     test_batch_size: int = 64
@@ -33,11 +33,11 @@ class ExpConfig(mltk.Config):
         kl_weight: float = 1e-2
         n_z: int = 5
 
-        # latency_model: str = 'tree'  # tree / gat
-        # structure_model: str = 'tree'  # tree / gcn
+        latency_model: str = 'tree'  # tree / gat
+        structure_model: str = 'tree'  # tree / gcn
 
-        latency_model: str = 'gat'  # tree / gat
-        structure_model: str = 'gcn'  # tree / gcn
+        # latency_model: str = 'gat'  # tree / gat
+        # structure_model: str = 'gcn'  # tree / gcn
 
         optimize_model: str = 'graph_lstm'  # graph_lstm / tree_lstm
 
